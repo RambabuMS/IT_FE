@@ -21,9 +21,9 @@ const ApiService = {
       throw error;
     }
   },
-  selectBike: async (username, bikeId) => {
+  selectBike: async (userId, bikeId) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/select-bike`, { username, bikeId });
+      const response = await axios.post(`${API_BASE_URL}/select-bike`, { userId, bikeId });
       return response.data;
     } catch (error) {
       throw error;

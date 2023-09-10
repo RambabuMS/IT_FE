@@ -16,6 +16,9 @@ export default function Login() {
        try{
         const response = await ApiService.login(login.username,login.password);
         sessionStorage.setItem('token', response.token);
+        sessionStorage.setItem('role', response.role);
+        sessionStorage.setItem('name', response.name);
+        sessionStorage.setItem('userId', response.userId);
         toast.success('Login successful');
         if(response.role === 'admin'){
           navigate("/dashboard");

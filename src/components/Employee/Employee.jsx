@@ -8,12 +8,15 @@ import {
   InputLabel,
 } from '@mui/material';
 import ApiService from '../../ApiService';
+import Navbar from '../Navbar/Navbar';
+import RecordTable from './Table';
 
 function Employee() {
   const [selectedBike, setSelectedBike] = useState('');
-  const [bikelist, setBikelist] = useState('');
-  const [age, setAge] = useState('');
-//   const selectedBikeInfo = bikes.find((bike) => bike.id === parseInt(selectedBike));
+  const [bikelist, setBikelist] = useState([]);
+  const [records,setRecords] = useState([]);
+  const [hideInput,setHideInput] = useState(false);
+  const userId = sessionStorage.getItem('userId');
 
 useEffect(()=>{
     getBikes();
@@ -22,19 +25,19 @@ useEffect(()=>{
   const getBikes = async()=>{
     try {
         const bikes =  await ApiService.getBike();
-        console.log(bikes,"bike");
-        setBikelist(bikes)
-          // Handle successful bike selection
+        setBikelist(bikes.bikes)
         } catch (error) {
-          // Handle error
           console.error('Bike selection failed:', error);
         }
   }
 
   const handleBikeSelection = async () => {
     try {
-    //   await ApiService.selectBike(username, selectedBike);
-      // Handle successful bike selection
+     const data = await ApiService.selectBike(userId, selectedBike);
+     console.log(data);
+     setRecords(data)
+     setHideInput(true)
+     
     } catch (error) {
       // Handle error
       console.error('Bike selection failed:', error);
@@ -46,8 +49,11 @@ useEffect(()=>{
 
   return (
     <>
-      <Typography variant="h6">Select a Bike to Assemble</Typography>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+     <Navbar/>
+   { !hideInput &&
+   <>
+     <Typography variant="h6" style={{margin: "20px",padding: "5px"}}>Select a Bike to Assemble</Typography>
+      <FormControl sx={{ m: 1, width:"270px" }} style={{margin: "10px",padding: "5px"}}>
   <InputLabel id="demo-simple-select-label">Bike</InputLabel>
   <Select
     labelId="demo-simple-select-label"
@@ -56,15 +62,15 @@ useEffect(()=>{
     label="bike"
     onChange={handleChange}
   >
-    <MenuItem value={10}>Ten</MenuItem>
-    <MenuItem value={20}>Twenty</MenuItem>
-    <MenuItem value={30}>Thirty</MenuItem>
+    {bikelist.map((bike,i)=>{
+      return(
+        <MenuItem key={i} value={bike._id}>{`${bike.name} - ${bike.assemblyTime} minutes `}</MenuItem>
+      )
+    })}
   </Select>
-  {/* {selectedBikeInfo && (
-        <p>Expected Assembly Time: {selectedBikeInfo.assemblyTime} minutes</p>
-      )} */}
-</FormControl>
+</FormControl >
       <Button
+      style={{margin: "25px"}}
         variant="contained"
         color="primary"
         onClick={handleBikeSelection}
@@ -72,6 +78,9 @@ useEffect(()=>{
       >
         Select
       </Button>
+      </>}
+      {records.success === true &&<RecordTable records = {records.data}/>}
+
     </>
   );
 }
