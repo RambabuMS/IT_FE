@@ -13,10 +13,15 @@ function Dashboard() {
   const [selectedDateRange, setSelectedDateRange] = useState({ from: '', to: '' });
   const [employeeProduction, setEmployeeProduction] = useState([]);
 
+  console.log(selectedDateRange);
+
+
   const handleDateChange = async () => {
     try {
-    //   const response = await ApiService.getEmployeeProduction(username, selectedDate);
-    //   setEmployeeProduction(response);
+      const response = await ApiService.getAllProductionRecords(selectedDateRange);
+      console.log(response.data);
+      setEmployeeProduction(response);
+      
     } catch (error) {
       // Handle error
       console.error('Failed to fetch employee production records:', error);
@@ -73,6 +78,7 @@ function Dashboard() {
       </Grid>
       {/* Render charts and metrics based on productionData */}
     </Container>
+   
     </>
   );
 }

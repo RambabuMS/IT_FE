@@ -38,6 +38,15 @@ const ApiService = {
       throw error;
     }
   },
+  getAllProductionRecords: async (date) => {
+    try {
+      const {from, to } = date;
+      const response = await axios.get(`${API_BASE_URL}/all_bike_data?fromDate=${from}&toDate=${to}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default ApiService;
