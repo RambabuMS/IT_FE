@@ -7,6 +7,7 @@ import {
   Container,
 } from '@mui/material';
 import ApiService from '../../ApiService';
+import Navbar from '../Navbar/Navbar';
 
 function Dashboard() {
   const [selectedDateRange, setSelectedDateRange] = useState({ from: '', to: '' });
@@ -26,8 +27,9 @@ function Dashboard() {
     handleDateChange();
   }, []);
   return (
+    <>
+    <Navbar/>
     <Container>
-      <Typography variant="h5">Dashboard</Typography>
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <TextField
@@ -71,6 +73,7 @@ function Dashboard() {
       </Grid>
       {/* Render charts and metrics based on productionData */}
     </Container>
+    </>
   );
 }
 
