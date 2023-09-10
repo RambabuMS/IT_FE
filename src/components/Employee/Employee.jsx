@@ -20,6 +20,7 @@ function Employee() {
 
 useEffect(()=>{
     getBikes();
+    handleBikeSelection("get")
 },[])
 
   const getBikes = async()=>{
@@ -31,10 +32,9 @@ useEffect(()=>{
         }
   }
 
-  const handleBikeSelection = async () => {
+  const handleBikeSelection = async (str) => {
     try {
-     const data = await ApiService.selectBike(userId, selectedBike);
-     console.log(data);
+     const data = await ApiService.selectBike(userId, selectedBike,str);
      setRecords(data)
      setHideInput(true)
      
@@ -73,7 +73,7 @@ useEffect(()=>{
       style={{margin: "25px"}}
         variant="contained"
         color="primary"
-        onClick={handleBikeSelection}
+        onClick={()=>handleBikeSelection("post")}
         disabled={!selectedBike}
       >
         Select

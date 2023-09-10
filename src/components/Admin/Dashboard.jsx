@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Typography,
   Grid,
   TextField,
   Button,
@@ -8,19 +7,18 @@ import {
 } from '@mui/material';
 import ApiService from '../../ApiService';
 import Navbar from '../Navbar/Navbar';
+import Chart from '../Chart/Chart';
 
 function Dashboard() {
   const [selectedDateRange, setSelectedDateRange] = useState({ from: '', to: '' });
   const [employeeProduction, setEmployeeProduction] = useState([]);
-
-  console.log(selectedDateRange);
 
 
   const handleDateChange = async () => {
     try {
       const response = await ApiService.getAllProductionRecords(selectedDateRange);
       console.log(response.data);
-      setEmployeeProduction(response);
+      setEmployeeProduction(response.data);
       
     } catch (error) {
       // Handle error
@@ -34,7 +32,7 @@ function Dashboard() {
   return (
     <>
     <Navbar/>
-    <Container>
+    <Container style={{marginTop: '20px'}}>
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <TextField
@@ -78,7 +76,7 @@ function Dashboard() {
       </Grid>
       {/* Render charts and metrics based on productionData */}
     </Container>
-   
+   {/* <Chart data={employeeProduction}/>  */}
     </>
   );
 }

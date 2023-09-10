@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import moment from 'moment';
 
 export default function RecordTable(data) {
   return (
@@ -35,7 +36,7 @@ export default function RecordTable(data) {
               <TableCell component="th" scope="row">
                 {row.bikeId.assemblyTime}
               </TableCell>
-              <TableCell align="right">{row.createdAt}</TableCell>
+              <TableCell align="right">{moment(row.createdAt).format('LLL')}</TableCell>
               <TableCell align="right">{row.status}</TableCell>
             </TableRow>
           ))}
