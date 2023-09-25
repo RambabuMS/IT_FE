@@ -5,9 +5,9 @@ import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-export function Chart(props) {
+export function ChartEmp(props) {
   let bikeName = props.data.map((item)=>(
-    item._id.name ||  item._id.item._id.name
+    item.name
   ))
   let bikeCount = props.data.map((item)=>(
     item.count

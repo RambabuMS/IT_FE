@@ -30,9 +30,9 @@ const ApiService = {
     }
   },
 
-  getProductionRecords: async () => {
+  getProductionRecords: async (emp,date) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/bike-data`);
+      const response = await axios.get(`${API_BASE_URL}/bike-data?userId=${emp}&date=${date}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -47,6 +47,22 @@ const ApiService = {
       throw error;
     }
   },
+  getEmployees: async()=>{
+    try{
+     const response = await axios.get(`${API_BASE_URL}/get_employees`);
+     return response.data;
+    }catch (error) {
+      throw error;
+    }
+  },
+  getUsername: async(id)=>{
+    try{
+     const response = await axios.get(`${API_BASE_URL}/get_employees/${id}`);
+     return response.data;
+    }catch (error) {
+      throw error;
+    }
+  }
 };
 
 export default ApiService;
